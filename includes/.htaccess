@@ -1,0 +1,2 @@
+# Private: never served, whether or not mod_rewrite is available.
+Require all denied

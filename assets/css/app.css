@@ -1,0 +1,659 @@
+/* Design tokens (DESIGN.md section 2). The only place colors, radii, shadows and z-index live. */
+/* Day Sky: a bright morning sky behind see-through panels. */
+:root {
+    color-scheme: light;
+    --bg: #E4F3FF;
+    --surface: rgb(252 254 255 / 0.78);
+    --surface-muted: rgb(226 240 251 / 0.82);
+    --surface-solid: #FCFEFF;
+    --bar: rgb(240 248 255 / 0.97);
+    --header-glass: rgb(244 250 255 / 0.62);
+    --border: rgb(150 190 224 / 0.5);
+    --border-strong: #5D82A1;
+    --text: #0E2233;
+    --text-muted: #45607A;
+    --text-subtle: #4A667C;
+    --accent: #0868A3;
+    --on-accent: #FCFEFF;
+    --accent-strong: #075C8F;
+    --accent-soft: #DDF0FC;
+    --sky: #38BDF8;
+    --danger: #C2352B;
+    --warning: #935104;
+
+    /* Drifting clouds (core/sky.js), shaded from bright top to a cooler underside. */
+    --cloud-back: rgb(252 254 255 / 0.95);
+    --cloud-mid: rgb(222 236 248 / 0.9);
+    --cloud-front: rgb(190 212 232 / 0.85);
+
+    /* Soft cloud haze over a morning gradient; the moving clouds sit above it. */
+    --page-sky:
+        radial-gradient(ellipse 55% 20% at 10% 12%, rgb(252 254 255 / 0.8), transparent 70%),
+        radial-gradient(ellipse 40% 16% at 86% 6%, rgb(252 254 255 / 0.7), transparent 70%),
+        radial-gradient(ellipse 50% 18% at 64% 38%, rgb(252 254 255 / 0.45), transparent 70%),
+        radial-gradient(ellipse 60% 22% at 22% 88%, rgb(252 254 255 / 0.6), transparent 70%),
+        linear-gradient(180deg, #BDE2FF 0%, #D8EFFF 45%, #F2F9FF 100%);
+
+    /* Fixed in both themes: the badge tiers carry their own contrast (DESIGN 3.10). */
+    --sky-200: #BAE6FD;
+    --sky-300: #7DD3FC;
+    --sky-400: #38BDF8;
+    --sky-600: #0369A1;
+    --sky-800: #075985;
+    --sky-ink: #0E2233;
+    --sky-paper: #FCFEFF;
+
+    --radius-pill: 9999px;
+    --radius-input: 12px;
+    --radius-check: 6px;
+    --radius-card: 16px;
+    --radius-modal: 24px;
+
+    --shadow-sm: 0 1px 2px rgb(10 116 180 / 0.06);
+    --shadow-md: 0 8px 24px rgb(10 116 180 / 0.10);
+    --shadow-lg: 0 24px 64px rgb(7 60 100 / 0.18);
+    --backdrop: rgb(10 21 32 / 0.45);
+
+    --z-sky: -1;
+    --z-sticky: 30;
+    --z-overlay: 40;
+    --z-modal: 50;
+    --z-swal: 60;
+
+    --header-h: 56px;
+    --dur-check: 200ms;
+    --dur-enter: 260ms;
+    --dur-exit: 180ms;
+    --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Night Sky: deep navy with twinkling stars (core/sky.js), panels you can see the sky through. */
+[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0B1430;
+    --surface: rgb(16 30 62 / 0.72);
+    --surface-muted: rgb(34 54 100 / 0.55);
+    --surface-solid: #101E3E;
+    --bar: rgb(11 20 48 / 0.97);
+    --header-glass: rgb(11 20 48 / 0.55);
+    --border: rgb(120 160 230 / 0.18);
+    --border-strong: #6A8DC6;
+    --text: #E8F0FF;
+    --text-muted: #B4C4E0;
+    --text-subtle: #9DB1D4;
+    --accent: #5CC8FF;
+    --on-accent: #062435;
+    --accent-strong: #9ADCFF;
+    --accent-soft: rgb(92 200 255 / 0.18);
+    --sky: #5CC8FF;
+    --danger: #FF8A7F;
+    --warning: #F2B45A;
+
+    --star: rgb(232 240 255);
+
+    /* Gradient and glow only: every star is a twinkling element from core/sky.js. */
+    --page-sky:
+        radial-gradient(ellipse 50% 35% at 78% 0%, rgb(120 170 255 / 0.2), transparent 70%),
+        linear-gradient(180deg, #1B2A5C 0%, #0F1B3D 45%, #070D1F 100%);
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
+    --shadow-md: 0 8px 24px rgb(0 0 0 / 0.35);
+    --shadow-lg: 0 24px 64px rgb(0 0 0 / 0.35);
+}
+
+@media (min-width: 1024px) {
+    :root { --header-h: 64px; }
+}
+
+/* Base reset: the parts of a browser reset this UI relies on. */
+*, ::before, ::after { box-sizing: border-box; border: 0 solid var(--border); }
+html { line-height: 1.5; -webkit-text-size-adjust: 100%; tab-size: 4; }
+h1, h2, h3, h4, h5, h6 { margin: 0; font-size: inherit; font-weight: inherit; }
+p, blockquote, figure, dl, dd, hr, pre { margin: 0; }
+ol, ul, menu { margin: 0; padding: 0; list-style: none; }
+img, svg, video, canvas, iframe { display: block; vertical-align: middle; }
+img, video { max-width: 100%; height: auto; }
+hr { height: 0; color: inherit; border-top-width: 1px; }
+b, strong { font-weight: bolder; }
+code, pre { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1em; }
+table { border-collapse: collapse; border-color: inherit; text-indent: 0; }
+summary { display: list-item; }
+button, input, select, optgroup, textarea { margin: 0; padding: 0; font: inherit; color: inherit; letter-spacing: inherit; }
+button { border: 0; background: none; }
+textarea { resize: vertical; }
+[type="search"] { -webkit-appearance: textfield; outline-offset: -2px; }
+::placeholder { opacity: 1; color: var(--text-subtle); }
+a { color: inherit; text-decoration: none; }
+a[href], button, select, label { cursor: pointer; }
+:disabled { cursor: not-allowed; }
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 15px/24px Poppins, sans-serif;
+    font-variant-numeric: tabular-nums;
+}
+body.ui-scroll-lock { overflow: hidden; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+.ui-page { position: relative; isolation: isolate; min-height: 100dvh; display: flex; flex-direction: column; }
+/* The sky sits on its own fixed layer, painted once: no scroll work, and it works on iOS (unlike background-attachment: fixed). */
+.ui-page::before { content: ""; position: fixed; inset: 0; z-index: var(--z-sky); background: var(--page-sky); pointer-events: none; }
+.ui-content { flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; align-content: start; }
+@media (min-width: 768px) { .ui-content { padding: 24px; } }
+
+.ui-text-display { font-size: 30px; line-height: 36px; font-weight: 700; }
+.ui-text-h3 { font-size: 16px; line-height: 24px; font-weight: 600; }
+.ui-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ui-primogem { flex: none; width: 16px; height: 16px; object-fit: contain; }
+.trk-summary-primo .ui-primogem { width: 20px; height: 20px; }
+.ui-footer { padding: 24px 16px; text-align: center; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-subtle); }
+
+/* Buttons */
+.ui-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 40px; padding: 8px 20px; border-radius: var(--radius-pill);
+    font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; cursor: pointer;
+    transition: background-color 120ms ease-out, transform 120ms ease-out;
+}
+.ui-btn:active { transform: scale(0.98); }
+.ui-btn-primary { background: var(--accent); color: var(--on-accent); }
+.ui-btn-primary:hover { background: var(--accent-strong); }
+.ui-btn-secondary { background: var(--surface); border: 1px solid var(--border-strong); color: var(--text); }
+.ui-btn-secondary:hover { background: var(--surface-muted); }
+.ui-btn-ghost { background: transparent; color: var(--accent); }
+.ui-btn-ghost:hover { background: var(--surface-muted); }
+.ui-btn:disabled { background: var(--surface-muted); border-color: transparent; color: var(--text-subtle); transform: none; }
+
+/* Touch targets: the visual size follows DESIGN 3.1, the hit area reaches 44 px. */
+.ui-btn, .ui-icon-btn, .ui-segmented button, .ui-chip { position: relative; }
+.ui-btn::after, .ui-icon-btn::after, .ui-segmented button::after, .ui-chip::after { content: ""; position: absolute; }
+.ui-btn::after, .ui-icon-btn::after { inset: -2px; }
+.ui-chip::after { inset: -4px 0; }
+.ui-segmented button::after { inset: -6px 0; }
+
+.ui-icon-btn {
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    width: 40px; height: 40px; margin: 2px; border-radius: var(--radius-pill);
+    color: var(--text-muted); font-size: 20px; cursor: pointer;
+    transition: background-color 120ms ease-out;
+}
+.ui-icon-btn:hover { background: var(--surface-muted); color: var(--text); }
+.ui-icon-btn:active, .ui-segmented button:active, .ui-chip:active, .trk-side-item:active { transform: scale(0.98); }
+
+/* Segmented toggle */
+.ui-segmented { display: inline-flex; padding: 4px; border-radius: var(--radius-pill); background: var(--surface-muted); }
+.ui-segmented button {
+    min-width: 44px; min-height: 32px; padding: 4px 12px; border-radius: var(--radius-pill);
+    font-size: 14px; line-height: 20px; font-weight: 500; color: var(--text-muted); white-space: nowrap;
+}
+.ui-segmented button:hover { color: var(--text); }
+.ui-segmented button[aria-pressed="true"] { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: var(--shadow-sm); }
+
+/* Inputs */
+.ui-label { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--text); }
+.ui-select {
+    min-height: 44px; padding: 8px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-input);
+    background: var(--surface); color: var(--text); font-size: 14px; line-height: 20px;
+}
+.ui-select:hover { border-color: var(--accent); }
+.ui-field { display: grid; gap: 4px; }
+.ui-field-error { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 14px; line-height: 20px; color: var(--danger); }
+.ui-textarea {
+    width: 100%; padding: 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-input);
+    background: var(--surface); color: var(--text); font-size: 14px; line-height: 20px; resize: vertical;
+}
+.ui-textarea:hover { border-color: var(--accent); }
+.ui-textarea-mono { font: 400 13px/20px "JetBrains Mono", monospace; }
+.ui-spin { display: inline-block; font-size: 20px; animation: ui-spin 800ms linear infinite; }
+@keyframes ui-spin { to { transform: rotate(360deg); } }
+.ui-check { position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; line-height: 20px; }
+.ui-check input { position: absolute; opacity: 0; width: 22px; height: 22px; margin: 0; cursor: pointer; }
+.ui-check:hover .ui-check-box { border-color: var(--accent); }
+.ui-check:active .ui-check-box { transform: scale(0.98); }
+.ui-check-box {
+    position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none;
+    width: 22px; height: 22px; border: 1px solid var(--border-strong); border-radius: var(--radius-check);
+    background: var(--surface); color: var(--on-accent); font-size: 14px;
+}
+/* The fill answers the click at once. --ui-check-delay is the cascade stagger, set by core/motion.js. */
+.ui-check-box::before {
+    content: ""; position: absolute; inset: -1px; border-radius: var(--radius-check); background: var(--accent);
+    opacity: 0; transform: scale(0.7);
+    transition: opacity var(--dur-check) var(--ease-out), transform var(--dur-check) var(--ease-out);
+    transition-delay: var(--ui-check-delay, 0ms);
+}
+.ui-check-box i { position: relative; opacity: 0; }
+.ui-check input:checked + .ui-check-box::before { opacity: 1; transform: none; }
+.ui-check input:checked + .ui-check-box i { opacity: 1; }
+.ui-check input:focus-visible + .ui-check-box { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Header */
+/* The one glass surface (Decisions Log 51): small, and it is the layer content scrolls under. */
+.ui-header {
+    /* One layer above the sticky filter bar: the account menu opens inside the header and must cover the bar. */
+    position: sticky; top: 0; z-index: var(--z-overlay); border-bottom: 1px solid var(--border);
+    background: var(--header-glass); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .ui-header { background: var(--bar); } }
+.ui-header.is-stuck { box-shadow: var(--shadow-sm); }
+/* A phone in landscape has no height to spare for a sticky header with search and chips. */
+@media (max-height: 500px) { .ui-header { position: static; } }
+.ui-header-inner {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "brand actions" "search search";
+    align-items: center; gap: 0 8px; max-width: 1280px; margin: 0 auto; padding: 0 16px 8px;
+}
+.ui-wordmark { grid-area: brand; display: inline-flex; align-items: center; gap: 8px; min-width: 0; min-height: var(--header-h); font-weight: 700; color: var(--text); white-space: nowrap; }
+.ui-wordmark span { overflow: hidden; text-overflow: ellipsis; }
+/* A phone header also holds Bulk Mark, language and theme, so the name takes two lines. */
+@media (max-width: 479px) {
+    .ui-wordmark { white-space: normal; font-size: 13px; line-height: 16px; }
+    .ui-wordmark i { display: none; }
+    .ui-header-actions { gap: 0; }
+}
+/* Mobile shows Bulk Mark as an icon button (DESIGN 4.1). Tablet does too, so the search field keeps its width. */
+@media (max-width: 1023px) {
+    .trk-bulk-open.ui-btn { width: 40px; padding: 0; font-size: 20px; }
+    .trk-bulk-open span { display: none; }
+}
+.ui-wordmark i { flex: none; color: var(--accent); font-size: 24px; }
+.ui-header-actions { grid-area: actions; display: flex; align-items: center; gap: 4px; }
+.trk-search { grid-area: search; position: relative; display: flex; align-items: center; }
+.trk-search > i { position: absolute; left: 16px; color: var(--text-subtle); font-size: 20px; pointer-events: none; }
+.trk-search input {
+    width: 100%; min-height: 44px; padding: 8px 48px 8px 44px; border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill); background: var(--surface); color: var(--text); font-size: 14px; line-height: 20px;
+}
+.trk-search input:hover { border-color: var(--accent); }
+.trk-search input:placeholder-shown { padding-right: 16px; }
+.trk-search input::placeholder { color: var(--text-subtle); opacity: 1; text-overflow: ellipsis; }
+.trk-search input::-webkit-search-cancel-button { display: none; }
+.trk-search-clear { position: absolute; right: 0; }
+@media (min-width: 768px) {
+    .ui-header-inner { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "brand search actions"; gap: 24px; padding: 0 24px; }
+}
+
+/* Category chips: mobile and tablet */
+.trk-chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 16px 8px; scroll-snap-type: x proximity; scroll-padding-inline: 16px; scrollbar-width: none; }
+.trk-chips::-webkit-scrollbar { display: none; }
+.ui-chip {
+    flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 4px 12px;
+    border: 1px solid var(--border-strong); border-radius: var(--radius-pill); background: var(--surface);
+    color: var(--text); font-size: 14px; line-height: 20px; white-space: nowrap; scroll-snap-align: start;
+}
+.ui-chip:hover { background: var(--surface-muted); }
+.trk-chip-count { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-subtle); }
+.ui-chip[aria-current="true"], .ui-chip[aria-current="true"]:hover { background: var(--accent-soft); border-color: var(--accent-soft); color: var(--accent-strong); font-weight: 600; }
+.ui-chip[aria-current="true"] .trk-chip-count { color: var(--accent-strong); }
+@media (min-width: 768px) { .trk-chips { padding: 4px 24px 8px; scroll-padding-inline: 24px; } }
+@media (min-width: 1024px) { .trk-chips { display: none; } }
+
+/* Banner */
+.ui-banner { display: flex; align-items: center; gap: 12px; padding: 4px 8px 4px 16px; border-radius: var(--radius-card); background: var(--surface-muted); font-size: 14px; line-height: 20px; color: var(--text); }
+.ui-banner > i { font-size: 20px; color: var(--accent); }
+.ui-banner p { flex: 1; margin: 0; }
+.ui-banner-warning { padding: 8px 16px; color: var(--warning); }
+.ui-banner-warning > i { color: var(--warning); }
+.ui-banner-info { align-items: flex-start; padding: 12px 16px; background: var(--accent-soft); text-align: left; }
+.ui-banner-info > i { color: var(--accent-strong); }
+
+/* Tooltip (tippy.js, theme "ui"). tippy sets an inline z-index, so the token needs !important here. */
+[data-tippy-root] { z-index: var(--z-overlay) !important; }
+.tippy-box[data-theme~="ui"] { padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-input); background: var(--surface-solid); box-shadow: var(--shadow-md); color: var(--text); font-size: 14px; line-height: 20px; }
+.ui-swal-stack { display: grid; gap: 16px; }
+.ui-swal-stack > p { margin: 0; }
+
+/* Account */
+.ui-account { position: relative; display: flex; align-items: center; min-height: 32px; }
+.ui-account:empty { display: none; }
+/* Google's button is a light document. An iframe whose color-scheme differs from its page gets an opaque white background. */
+.ui-account iframe { color-scheme: light; }
+.ui-avatar-btn { position: relative; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius-pill); }
+.ui-avatar-btn:hover .ui-avatar { outline: 2px solid var(--border-strong); }
+.ui-avatar-btn:active { transform: scale(0.98); }
+.ui-avatar { position: relative; display: block; flex: none; overflow: hidden; border-radius: var(--radius-pill); background: var(--accent-soft); color: var(--accent-strong); }
+.ui-avatar-32 { width: 32px; height: 32px; font-size: 14px; line-height: 32px; }
+.ui-avatar-40 { width: 40px; height: 40px; font-size: 16px; line-height: 40px; }
+.ui-avatar-48 { width: 48px; height: 48px; font-size: 20px; line-height: 48px; }
+.ui-avatar-letter { display: block; text-align: center; font-weight: 600; }
+.ui-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ui-menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: var(--z-overlay); width: 240px; padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface-solid); box-shadow: var(--shadow-md); }
+.ui-menu-head { padding: 8px 12px; }
+.ui-menu-name { margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; overflow-wrap: anywhere; }
+.ui-menu-email { margin: 0; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-muted); overflow-wrap: anywhere; }
+.ui-menu-list > .ui-menu-email { padding: 0 12px 8px; }
+.ui-menu-list { display: grid; }
+.ui-menu-item { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 44px; padding: 8px 12px; border-radius: var(--radius-input); text-align: left; font-size: 14px; line-height: 20px; color: var(--text); }
+.ui-menu-item i { font-size: 20px; color: var(--text-muted); }
+.ui-menu-item:hover { background: var(--surface-muted); }
+.ui-menu-item:active { transform: scale(0.98); }
+
+/* Forms and the Profile modal */
+.ui-input { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-input); background: var(--surface); color: var(--text); font-size: 14px; line-height: 20px; }
+.ui-input:hover:not([readonly]) { border-color: var(--accent); }
+.ui-input[readonly] { background: var(--surface-muted); color: var(--text-muted); }
+.ui-field-help { margin: 0; font-size: 14px; line-height: 20px; color: var(--text-subtle); }
+.ui-form { display: grid; justify-items: start; gap: 16px; }
+.ui-form .ui-field { width: 100%; }
+.ui-profile { display: grid; gap: 16px; }
+.ui-danger-zone { display: grid; justify-items: start; gap: 8px; padding-top: 16px; border-top: 1px solid var(--border); }
+.ui-danger-title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; color: var(--danger); }
+.ui-btn-danger { color: var(--danger); }
+.ui-btn-danger:hover { outline: 1px solid var(--danger); }
+.ui-btn-danger-fill { background: var(--danger); color: var(--on-accent); }
+.ui-btn-danger-fill:hover { opacity: 0.9; }
+
+/* Progress summary */
+/* One panel for everything; a second one for the chosen category and filters sits beside it (below it on phones). */
+.trk-summary { display: grid; gap: 16px; }
+.trk-summary-panel { display: grid; align-content: start; gap: 12px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
+.trk-summary-title { margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; color: var(--text-muted); }
+.trk-summary-pct { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
+.trk-summary-count { margin: 0; font-size: 14px; line-height: 20px; color: var(--text-muted); }
+.trk-summary-primo { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; line-height: 20px; }
+.trk-progress-track { height: 8px; border-radius: var(--radius-pill); background: var(--surface-muted); overflow: hidden; }
+.trk-progress-fill { height: 100%; width: 100%; border-radius: var(--radius-pill); background: var(--sky); transform-origin: left; transform: scaleX(0); }
+@media (min-width: 768px) {
+    .trk-summary.is-split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .trk-summary.is-split .trk-summary-panel { padding: 16px 24px; }
+}
+@media (min-width: 1024px) {
+    .trk-summary:not(.is-split) .trk-summary-panel { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 24px; padding: 16px 24px; }
+    .trk-summary:not(.is-split) .trk-summary-pct { display: grid; gap: 0; }
+}
+
+/* Tracker layout */
+.trk-layout { display: grid; gap: 16px; align-items: start; }
+.trk-main { min-width: 0; display: grid; gap: 16px; }
+.trk-sidebar { display: none; }
+.trk-sidebar:empty { visibility: hidden; }
+@media (min-width: 1024px) {
+    .trk-layout { grid-template-columns: 280px minmax(0, 1fr); gap: 24px; }
+    .trk-sidebar {
+        display: block; position: sticky; top: calc(var(--header-h) + 16px); max-height: calc(100dvh - var(--header-h) - 32px);
+        overflow-y: auto; padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+    }
+}
+.trk-side-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px;
+    padding: 8px 12px; border-radius: var(--radius-input); text-align: left; font-size: 14px; line-height: 20px; color: var(--text);
+}
+.trk-side-item:hover { background: var(--surface-muted); }
+.trk-side-item[aria-current="true"], .trk-side-item[aria-current="true"]:hover { background: var(--accent-soft); color: var(--accent-strong); font-weight: 600; }
+.trk-side-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.trk-side-count { flex: none; font-size: 12px; line-height: 16px; font-weight: 500; }
+
+/* Filters */
+.trk-filter-bar { display: flex; }
+.trk-filter-controls { display: none; }
+@media (min-width: 768px) {
+    .trk-filter-open { display: none; }
+    .trk-filter-bar { display: block; padding: 8px 0; }
+    .trk-filter-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+}
+.trk-list { scroll-margin-top: 176px; }
+/* Rows scroll under the sticky bar, so it is nearly opaque instead of a second glass layer. */
+@media (min-width: 1024px) {
+    .trk-filter-bar { position: sticky; top: var(--header-h); z-index: var(--z-sticky); padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--bar); }
+    .trk-filter-bar .trk-filter-controls { gap: 8px 12px; }
+}
+.ui-dialog-body .trk-filter-controls { display: flex; flex-wrap: wrap; gap: 16px 8px; }
+.ui-dialog-body .trk-filter-controls .ui-segmented, .ui-dialog-body .trk-dropdown { flex: 1 0 100%; }
+/* Four status options do not fit one row on a phone, so the sheet shows them as a 2 by 2 grid. */
+@media (max-width: 479px) {
+    .ui-dialog-body .trk-status { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; border-radius: var(--radius-card); }
+    .ui-dialog-body .trk-status button { border-radius: var(--radius-input); }
+}
+/* Dropdown filters (Version, Sort): a secondary button with a panel under it. In the bar the panel floats; in the sheet it sits in the flow. */
+.trk-dropdown { position: relative; }
+.trk-dropdown-panel { max-height: 280px; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface-solid); }
+.trk-filter-bar .trk-dropdown-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: var(--z-overlay); box-shadow: var(--shadow-md); }
+.trk-version-panel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 8px; padding: 8px 12px; }
+.trk-filter-bar .trk-version-panel { width: 320px; }
+.trk-sort-panel { display: grid; gap: 2px; padding: 4px; }
+/* Sort sits at the end of the bar, so its panel opens toward the left. */
+.trk-filter-bar .trk-sort-panel { left: auto; right: 0; width: 240px; }
+.trk-sort-option {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 8px 12px;
+    border-radius: var(--radius-input); font-size: 14px; line-height: 20px; color: var(--text); text-align: left;
+}
+.trk-sort-option:hover { background: var(--surface-muted); }
+.trk-sort-option i { font-size: 16px; color: var(--accent-strong); visibility: hidden; }
+.trk-sort-option[aria-pressed="true"] { color: var(--accent-strong); font-weight: 600; }
+.trk-sort-option[aria-pressed="true"] i { visibility: visible; }
+
+/* List */
+.trk-list { display: grid; gap: 24px; }
+.trk-group { display: grid; gap: 12px; }
+.trk-group-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.trk-group-head h2 { margin: 0; font-size: 20px; line-height: 28px; font-weight: 600; }
+.trk-group-head i { color: var(--accent); font-size: 20px; }
+.trk-group-count { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-muted); }
+.trk-group-body { border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); overflow: hidden; }
+.trk-more { display: flex; justify-content: center; }
+
+/* Achievement row */
+/* content-visibility: off-screen rows skip style, layout and paint, which keeps long lists light. */
+.trk-row {
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px 24px; min-height: 72px; padding: 16px;
+    border-bottom: 1px solid var(--border); transition: background-color 200ms ease-out;
+    content-visibility: auto; contain-intrinsic-size: auto 96px;
+}
+.trk-row:last-child { border-bottom: 0; }
+.trk-row.is-done { background: var(--accent-soft); }
+@media (min-width: 1024px) { .trk-row { grid-template-columns: minmax(0, 1fr) auto; } }
+.trk-row-head { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; }
+.trk-row-name { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+.trk-row-seal { color: var(--accent); font-size: 20px; }
+.trk-row-desc { margin: 4px 0 0; max-width: 65ch; font-size: 14px; line-height: 20px; color: var(--text-muted); }
+.ui-meta-chip { display: inline-flex; align-items: center; min-height: 20px; padding: 0 8px; border-radius: var(--radius-pill); background: var(--surface-muted); color: var(--text-muted); font-size: 12px; line-height: 16px; font-weight: 500; }
+.trk-row.is-done .ui-meta-chip { background: var(--surface); }
+.trk-row-side { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+/* Tablet: rows are wide enough to keep stages and the tutorial action on one line. */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .trk-row-side { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; }
+    .trk-row-side > .trk-howto:only-child { margin-left: auto; }
+}
+.trk-stages { display: flex; flex-wrap: wrap; gap: 0 16px; }
+.trk-stages-vertical { flex-direction: column; flex-wrap: nowrap; gap: 8px; margin-top: 8px; }
+.trk-stages-vertical .ui-check { align-items: flex-start; font-size: 14px; }
+.trk-stages-vertical .ui-check-box { margin-top: 0; }
+.trk-stage { display: inline-flex; align-items: center; gap: 8px; }
+.trk-stage-reward { display: inline-flex; align-items: center; gap: 4px; }
+.trk-stage-text { display: grid; }
+.trk-stage-title { font-weight: 600; }
+.trk-stage-desc { color: var(--text-muted); }
+.trk-howto.ui-btn { min-height: 36px; padding: 4px 12px; }
+.trk-howto.ui-btn::after { inset: -4px 0; }
+.trk-howto.is-empty { color: var(--text-subtle); }
+/* --text-subtle is 4.46:1 on the light done tint, just under AA. */
+.trk-row.is-done .trk-howto.is-empty { color: var(--text-muted); }
+@media (min-width: 1024px) { .trk-row-side { align-items: flex-end; } }
+mark.trk-hit { background: var(--accent-soft); color: inherit; border-radius: var(--radius-check); }
+.trk-row.is-done mark.trk-hit { background: var(--surface); }
+
+/* Skeleton */
+.ui-skeleton, .ui-skeleton-text { border-radius: var(--radius-input); background: var(--surface-muted); color: transparent; animation: ui-shimmer 1.6s ease-in-out infinite; }
+.trk-skel-title { width: 40%; height: 20px; }
+.trk-skel-desc { width: 70%; height: 16px; margin-top: 8px; }
+.trk-skel-stages { display: flex; gap: 8px; }
+.trk-skel-box { width: 80px; height: 28px; }
+@keyframes ui-shimmer { 50% { opacity: 0.5; } }
+
+/* Empty state and error panel */
+.ui-empty { display: grid; justify-items: center; gap: 12px; padding: 48px 16px; text-align: center; color: var(--text-muted); }
+.ui-empty > i { font-size: 48px; color: var(--text-subtle); }
+.ui-empty p { margin: 0; max-width: 65ch; }
+
+/* Dialog: modal on desktop, bottom sheet on mobile */
+.ui-dialog-root { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; align-items: flex-end; justify-content: center; }
+/* No backdrop blur: repainting a full-screen blur on every frame is what made overlays stutter. */
+.ui-dialog-backdrop { position: absolute; inset: 0; background: var(--backdrop); will-change: opacity; }
+.ui-dialog {
+    position: relative; display: flex; flex-direction: column; width: 100%; max-height: 92dvh; will-change: transform, opacity;
+    border-radius: var(--radius-modal) var(--radius-modal) 0 0; background: var(--surface-solid); box-shadow: var(--shadow-lg);
+}
+.ui-dialog-handle { display: flex; justify-content: center; align-items: center; height: 24px; touch-action: none; cursor: grab; }
+.ui-dialog-handle::before { content: ""; width: 40px; height: 4px; border-radius: var(--radius-pill); background: var(--border-strong); }
+.ui-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 12px 12px 8px 24px; }
+.ui-dialog-title { margin: 0; font-size: 20px; line-height: 28px; font-weight: 600; }
+.ui-dialog-subtitle { margin: 0; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-muted); }
+.ui-dialog-body { flex: 1; min-height: 0; padding: 8px 24px 24px; overflow-y: auto; }
+.ui-dialog-foot { padding: 12px 24px; border-top: 1px solid var(--border); }
+.ui-dialog-drawer { height: 100dvh; max-height: 100dvh; border-radius: 0; }
+@media (min-width: 768px) {
+    .ui-dialog-root { align-items: center; padding: 24px; }
+    .ui-dialog { max-width: 720px; max-height: 85dvh; border-radius: var(--radius-modal); }
+    .ui-dialog-handle { display: none; }
+    .ui-dialog-root-drawer { align-items: stretch; justify-content: flex-end; padding: 0; }
+    .ui-dialog-drawer { max-width: 560px; height: 100dvh; max-height: 100dvh; border-radius: var(--radius-modal) 0 0 var(--radius-modal); }
+}
+
+/* Bulk Mark */
+.trk-bulk { display: grid; gap: 16px; }
+.trk-bulk .ui-segmented { justify-self: start; }
+.trk-bulk-hint { margin: 0; font-size: 14px; line-height: 20px; color: var(--text-muted); }
+.trk-bulk-example { margin: 0; font: 400 12px/16px Poppins, sans-serif; color: var(--text-subtle); white-space: pre-wrap; }
+.ui-textarea-mono ~ .trk-bulk-example { font: 400 12px/16px "JetBrains Mono", monospace; }
+.trk-bulk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.trk-bulk-report { display: grid; gap: 8px; }
+.trk-bulk-report:empty { display: none; }
+.trk-bulk-group { border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden; }
+.trk-bulk-summary { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; font-size: 14px; line-height: 20px; font-weight: 600; cursor: pointer; }
+.trk-bulk-summary:hover { background: var(--surface-muted); }
+.trk-bulk-icon { font-size: 20px; }
+.trk-bulk-accent .trk-bulk-icon { color: var(--accent); }
+.trk-bulk-warning .trk-bulk-icon { color: var(--warning); }
+.trk-bulk-danger .trk-bulk-icon { color: var(--danger); }
+.trk-bulk-muted .trk-bulk-icon { color: var(--text-subtle); }
+.trk-bulk-title { flex: 1; }
+.trk-bulk-count { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-muted); }
+.trk-bulk-body { display: grid; gap: 4px; padding: 0 12px 12px; }
+.trk-bulk-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: 14px; line-height: 20px; }
+.trk-bulk-item { display: flex; justify-content: space-between; gap: 12px; overflow-wrap: anywhere; }
+.trk-bulk-meta { flex: none; font-size: 12px; line-height: 20px; font-weight: 500; color: var(--text-muted); }
+.trk-bulk-copy { justify-self: start; }
+.trk-bulk-fieldset { display: grid; margin: 0; padding: 0; border: 0; }
+.trk-bulk-legend { padding: 0; font-weight: 600; }
+.trk-bulk-radio { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.trk-bulk-radio input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+.trk-bulk-radio span:first-of-type { flex: 1; }
+.trk-bulk-section { display: grid; justify-items: start; gap: 8px; padding-top: 16px; border-top: 1px solid var(--border); }
+.trk-bulk-heading { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+.trk-bulk-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.trk-bulk-foot .ui-btn { margin-left: auto; }
+.trk-bulk-foot-summary { margin: 0; font-size: 14px; line-height: 20px; color: var(--text-muted); }
+@media (max-width: 767px) { .trk-bulk-foot .ui-btn { min-height: 48px; } }
+
+/* Tutorial content: the tracker modal, the editor Preview and Approvals */
+.ui-tutorial { display: grid; gap: 16px; min-width: 0; }
+.ui-note { margin: 0; padding: 8px 16px; border-radius: var(--radius-card); background: var(--surface-muted); font-size: 14px; line-height: 20px; color: var(--text); }
+.ui-video { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-card); background: var(--surface-muted); }
+.ui-video iframe { display: block; width: 100%; height: 100%; border: 0; }
+.ui-video-play { display: block; width: 100%; height: 100%; }
+.ui-video-play img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ui-video-icon { position: absolute; top: 50%; left: 50%; display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: var(--radius-pill); background: var(--accent); color: var(--on-accent); font-size: 24px; transform: translate(-50%, -50%); transition: background-color 120ms ease-out; }
+.ui-video-play:hover .ui-video-icon { background: var(--accent-strong); }
+.ui-prose { max-width: 65ch; overflow-wrap: anywhere; }
+.ui-prose > :first-child { margin-top: 0; }
+.ui-prose > :last-child { margin-bottom: 0; }
+.ui-prose p, .ui-prose ul, .ui-prose ol, .ui-prose pre { margin: 0 0 16px; }
+/* Set here because the base reset clears list markers. */
+.ui-prose ul, .ui-prose ol { padding-left: 24px; }
+.ui-prose ul { list-style: disc; }
+.ui-prose ol { list-style: decimal; }
+.ui-prose li + li { margin-top: 4px; }
+.ui-prose h2 { margin: 24px 0 8px; font-size: 20px; line-height: 28px; font-weight: 600; }
+.ui-prose h3 { margin: 24px 0 8px; font-size: 16px; line-height: 24px; font-weight: 600; }
+.ui-prose h4 { margin: 16px 0 8px; font-size: 15px; line-height: 24px; font-weight: 600; }
+.ui-prose strong, .ui-prose b { font-weight: 600; }
+.ui-prose a { color: var(--accent); text-decoration: underline; }
+.ui-prose img { display: block; max-width: 100%; height: auto; margin: 16px 0; border-radius: var(--radius-card); }
+.ui-prose blockquote { margin: 16px 0; padding-left: 16px; border-left: 3px solid var(--accent); color: var(--text-muted); }
+.ui-prose code, .ui-prose pre { border-radius: var(--radius-check); background: var(--surface-muted); font-size: 14px; }
+.ui-prose code { padding: 0 4px; }
+.ui-prose pre { padding: 12px; overflow-x: auto; white-space: pre-wrap; }
+.ui-prose pre code { padding: 0; background: none; }
+/* Tutorial credit (DESIGN 4.3): Published by, and Last edit by on the right once the tutorial was edited. Stacks on phones. */
+.ui-credit { display: grid; margin: 0 0 16px; border: 1px solid var(--border); border-radius: var(--radius-card); }
+.ui-credit-person { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 12px 16px; }
+.ui-credit-person + .ui-credit-person { border-top: 1px solid var(--border); }
+.ui-credit-text { display: grid; min-width: 0; }
+.ui-credit-text p { margin: 0; }
+.ui-credit-label, .ui-credit-date { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-muted); }
+.ui-credit-name { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 14px; line-height: 20px; font-weight: 600; color: var(--text); overflow-wrap: anywhere; }
+@media (min-width: 768px) {
+    .ui-credit:has(> .ui-credit-person + .ui-credit-person) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ui-credit-person + .ui-credit-person { border-top: 0; border-left: 1px solid var(--border); }
+}
+
+/* Contributor badges: steps of the sky scale, so tiers stay on palette (DESIGN 3.10). */
+.ui-badge { display: inline-flex; align-items: center; gap: 4px; min-height: 28px; padding: 4px 12px 4px 8px; border-radius: var(--radius-pill); font-size: 12px; line-height: 16px; font-weight: 600; background: var(--tier-bg); color: var(--tier-text); }
+.ui-badge i { font-size: 16px; }
+.ui-badge-tier-1 { --tier-bg: var(--sky-200); --tier-text: var(--sky-ink); }
+.ui-badge-tier-2 { --tier-bg: var(--sky-300); --tier-text: var(--sky-ink); }
+.ui-badge-tier-3 { --tier-bg: var(--sky-400); --tier-text: var(--sky-ink); }
+.ui-badge-tier-4 { --tier-bg: var(--sky-600); --tier-text: var(--sky-paper); }
+.ui-badge-tier-5 { --tier-bg: var(--sky-800); --tier-text: var(--sky-paper); }
+.ui-menu-badge { padding: 0 12px 8px; }
+
+/* Living sky (core/sky.js): its own fixed layer above the painted gradient. Only opacity and transform move. */
+.ui-sky { position: fixed; inset: 0; z-index: var(--z-sky); overflow: hidden; pointer-events: none; contain: strict; }
+.ui-star {
+    position: absolute; border-radius: var(--radius-pill); background: var(--star); opacity: var(--peak);
+    animation: ui-twinkle var(--twinkle) ease-in-out var(--delay) infinite;
+}
+@keyframes ui-twinkle {
+    0%, 100% { opacity: var(--peak); }
+    50% { opacity: 0; }
+}
+/* Clouds drift from just off the left edge to past the right one. The shape is drawn once; only the lane moves. */
+.ui-cloud {
+    position: absolute; left: 0; width: 380px; height: 150px;
+    transform: translateX(var(--x)) scale(var(--scale)); will-change: transform;
+    animation: ui-drift var(--drift) linear var(--delay) infinite;
+}
+@keyframes ui-drift {
+    from { transform: translateX(-440px) scale(var(--scale)); }
+    to { transform: translateX(calc(100vw + 60px)) scale(var(--scale)); }
+}
+.ui-cloud-body { position: absolute; inset: 24px; display: block; }
+/* Layer shapes adapted from svg-clouds' default.css (MIT), colored with sky tokens. */
+.ui-cloud-back, .ui-cloud-mid, .ui-cloud-front { position: absolute; display: block; border-radius: 50% 50% 5% 5%; }
+.ui-cloud-back { width: 100%; height: 100%; background: var(--cloud-back); box-shadow: 0 0 4rem 0 var(--cloud-back); }
+.ui-cloud-mid, .ui-cloud-front { left: 50%; top: 100%; transform: translate(-50%, -100%); }
+.ui-cloud-mid { width: 90%; height: 30%; background: var(--cloud-mid); box-shadow: 0 0 4rem 0 var(--cloud-mid); }
+.ui-cloud-front { width: 80%; height: 5%; background: var(--cloud-front); box-shadow: 0 0 4rem 0 var(--cloud-front); }
+
+/* SweetAlert2 */
+.ui-swal-popup .swal2-textarea { width: auto; margin: 8px 16px; border: 1px solid var(--border-strong); border-radius: var(--radius-input); background: var(--surface); color: var(--text); font: 400 14px/20px Poppins, sans-serif; box-shadow: none; }
+.ui-swal-popup .swal2-input-label { margin: 8px 16px 0; color: var(--text); font-size: 14px; line-height: 20px; font-weight: 500; justify-content: flex-start; }
+.ui-swal-popup .swal2-validation-message { background: var(--surface-muted); color: var(--danger); font-size: 14px; }
+.swal2-container { z-index: var(--z-swal); font-family: Poppins, sans-serif; }
+.swal2-popup.swal2-toast.ui-swal-toast {
+    border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface-solid); color: var(--text); box-shadow: var(--shadow-md); font-size: 14px;
+}
+.ui-swal-toast .swal2-html-container { color: var(--text); font-size: 14px; }
+.swal2-popup.ui-swal-popup { border-radius: var(--radius-modal); background: var(--surface-solid); color: var(--text); box-shadow: var(--shadow-lg); font-size: 15px; }
+.ui-swal-popup .swal2-title { color: var(--text); font-size: 20px; line-height: 28px; font-weight: 600; }
+.ui-swal-popup .swal2-html-container { color: var(--text-muted); font-size: 14px; line-height: 20px; }
+.ui-swal-popup .swal2-icon { border: 0; color: var(--danger); font-size: 32px; animation: none; }
+.ui-swal-popup .swal2-icon * { animation: none; }
+.ui-swal-actions { gap: 8px; }
+.ui-swal-icon { border: 0 !important; color: var(--accent) !important; font-size: 24px; }
+.ui-swal-icon-danger { color: var(--danger) !important; }
+/* SweetAlert2 animates its built-in icons; ours are Phosphor glyphs and only the popup moves. */
+.ui-swal-icon, .ui-swal-icon * { animation: none !important; }
+.ui-swal-in { animation: ui-swal-in var(--dur-enter) cubic-bezier(0.215, 0.61, 0.355, 1); }
+.ui-swal-out { animation: ui-swal-out var(--dur-exit) cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards; }
+@keyframes ui-swal-in { from { opacity: 0; transform: scale(0.96); } }
+@keyframes ui-swal-out { to { opacity: 0; transform: scale(0.96); } }
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-skeleton, .ui-skeleton-text, .ui-swal-in, .ui-swal-out, .ui-spin { animation: none; }
+    /* The sky holds still: stars at their own brightness, clouds wherever they were placed. */
+    .ui-star, .ui-cloud { animation: none; }
+    .ui-btn, .trk-row, .ui-icon-btn, .ui-check-box::before { transition: none; }
+    .ui-btn:active, .ui-icon-btn:active, .ui-segmented button:active, .ui-chip:active, .trk-side-item:active, .ui-check:active .ui-check-box { transform: none; }
+}

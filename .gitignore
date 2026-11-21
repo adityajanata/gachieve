@@ -1,0 +1,24 @@
+# Secrets and per-machine config
+includes/config.local.php
+
+# Runtime data (each server makes its own)
+storage/logs/*
+!storage/logs/.gitkeep
+storage/cache/
+storage/tutorial-drafts/
+uploads/*
+!uploads/.htaccess
+
+# Claude Code per-user settings
+.claude/settings.local.json
+
+# Tooling
+node_modules/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp

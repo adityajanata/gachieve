@@ -1,0 +1,36 @@
+Options -Indexes
+DirectoryIndex index.php
+# Source maps of the self-hosted vendor files are JSON.
+AddType application/json .map
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Dotfiles, private folders and project notes are never served.
+    RewriteRule (^|/)\. - [F,L]
+    RewriteRule ^(includes|database|storage|docs)(/|$) - [F,L]
+    RewriteRule ^(CLAUDE|README)\.md$ - [F,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/gsap@3.12.5/ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/ https://cdn.jsdelivr.net/npm/svg-clouds@1.0.1/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/ https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/; img-src 'self' data: blob: https://*.googleusercontent.com https://i.ytimg.com; connect-src 'self' blob: https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/ https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+    # Revalidate through ETag. ES modules have no build hash, so a stale copy of one
+    # file next to a fresh copy of another would break the page after every update.
+    <FilesMatch "\.(json|js|css)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+
+    # Vendor folders named with their version (name-1.2.3) never change in place, so they cache for a year.
+    # A new version gets a new folder. TinyMCE keeps the no-cache rule because its folder has no version.
+    <If "%{REQUEST_URI} =~ m#/assets/js/vendor/[a-z]+(-[a-z]+)*-[0-9]+\.[0-9]+\.[0-9]+/#">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/json text/css text/javascript application/javascript
+</IfModule>

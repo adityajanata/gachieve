@@ -1,0 +1,11 @@
+# Keep LF everywhere so files match on Windows (XAMPP) and the Linux VPS.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
