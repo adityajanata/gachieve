@@ -366,7 +366,8 @@ genshin-achievements/
 │   │   ├── tracker/           catalog.js, search.js, progress.js, cards.js,
 │   │   │                      bulk-mark.js, bulk-inquiry.js, backup.js, account.js,
 │   │   │                      filters.js, category-nav.js, summary.js,
-│   │   │                      tutorial-modal.js, main.js
+│   │   │                      tutorial-modal.js, main.js,
+│   │   │                      bulk-prompt.md (Bulk Mark AI prompt, owner-edited)
 │   │   ├── studio/            shell.js, ui.js, dashboard.js, tutorials.js, editor.js,
 │   │   │                      tinymce-config.js, lock.js, approvals.js, users.js,
 │   │   │                      points.js, my-points.js, audit.js, maintenance.js

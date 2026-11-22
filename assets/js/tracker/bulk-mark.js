@@ -5,6 +5,22 @@ import { openDialog } from '../core/modal.js';
 import { toastError, toastSuccess } from '../core/toast.js';
 import { MODE_JSON, MODE_NAME, runInquiry, stageIdsToApply } from './bulk-inquiry.js';
 
+// Plain Markdown the owner edits by hand, so it is a file of its own instead of a JS string (backticks need no escaping).
+const PROMPT_URL = 'assets/js/tracker/bulk-prompt.md';
+let promptRequest = null;
+
+/** Loads the AI prompt once per page. A failed load is forgotten, so the next drawer opening tries again. */
+function loadPrompt() {
+    promptRequest ??= fetch(PROMPT_URL).then((response) => {
+        if (!response.ok) throw new Error(`Prompt request failed: ${response.status}`);
+        return response.text();
+    }).catch((error) => {
+        promptRequest = null;
+        throw error;
+    });
+    return promptRequest;
+}
+
 const SAMPLE_JSON = `[
   { "name": "Lilin Menyala di Tengah Angin", "stage": 2 },
   { "name": "Petualang Belantara Berkilauan", "stage": 3 }
@@ -51,11 +67,55 @@ function resultGroup({ iconClass, tone, title, count, open, copyText, children }
 
 const stageNote = (stage) => (stage ? `Stage ${stage}` : null);
 
+/** Numbered steps for the JSON tab: record, ask an AI with the prompt (step 2 holds it, with Copy), paste, Check, Apply. */
+function jsonGuide() {
+    const prompt = el('textarea', {
+        className: 'ui-textarea trk-bulk-prompt',
+        attrs: { id: 'trk-bulk-prompt', rows: 6, readonly: true, spellcheck: 'false' },
+    });
+    const copyButton = el('button', {
+        className: 'ui-btn ui-btn-secondary',
+        text: 'Copy prompt',
+        attrs: { type: 'button', disabled: true },
+        on: { click: () => copyLines([prompt.value]) },
+    });
+    const loadError = el('p', { className: 'ui-field-error', attrs: { hidden: true } }, [
+        icon('ph ph-warning-circle'),
+        el('span', { text: 'Could not load the prompt. Close and open Bulk Mark to try again.' }),
+    ]);
+    setButtonLoading(copyButton, true);
+    loadPrompt().then((text) => {
+        prompt.value = text;
+        setButtonLoading(copyButton, false);
+    }, () => {
+        setButtonLoading(copyButton, false);
+        copyButton.disabled = true;
+        loadError.hidden = false;
+    });
+    const promptField = el('div', { className: 'ui-field' }, [
+        el('label', { className: 'ui-label', text: t('bulkPromptLabel'), attrs: { for: 'trk-bulk-prompt' } }),
+        prompt,
+        loadError,
+        el('div', { className: 'trk-bulk-actions' }, [copyButton]),
+    ]);
+    const step = (key, extra = null) => el('li', {}, [el('span', { text: t(key) }), extra]);
+    return el('section', { className: 'trk-bulk-guide' }, [
+        el('h3', { className: 'trk-bulk-heading', text: t('bulkGuideTitle') }),
+        el('ol', { className: 'trk-bulk-steps' }, [
+            step('bulkGuideStep1'),
+            step('bulkGuideStep2', promptField),
+            step('bulkGuideStep3'),
+            step('bulkGuideStep4'),
+        ]),
+    ]);
+}
+
 export function openBulkMark({ catalog, loadOther, progress, maxItems, onApply, onUndo, onImport, onExport }) {
     let report = null;
     let close = () => {};
 
-    const hint = el('p', { className: 'trk-bulk-hint' });
+    const hint = el('p', { className: 'trk-bulk-hint', text: t('bulkHintName') });
+    const guide = jsonGuide();
     const textarea = el('textarea', {
         className: 'ui-textarea',
         attrs: { id: 'trk-bulk-input', rows: 8, spellcheck: 'false', 'aria-describedby': 'trk-bulk-format' },
@@ -242,7 +302,8 @@ export function openBulkMark({ catalog, loadOther, progress, maxItems, onApply, 
     function applyMode() {
         const json = draft.mode === MODE_JSON;
         modeButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mode === draft.mode)));
-        hint.textContent = t(json ? 'bulkHintJson' : 'bulkHintName');
+        hint.hidden = json;
+        guide.hidden = !json;
         textareaLabel.textContent = t(json ? 'bulkInputJson' : 'bulkInputName');
         example.textContent = json ? SAMPLE_JSON : t('bulkExampleName');
         textarea.classList.toggle('ui-textarea-mono', json);
@@ -305,6 +366,7 @@ export function openBulkMark({ catalog, loadOther, progress, maxItems, onApply, 
     const body = el('div', { className: 'trk-bulk' }, [
         el('div', { className: 'ui-segmented', attrs: { role: 'group', 'aria-label': t('bulkMode') } }, modeButtons),
         hint,
+        guide,
         el('div', { className: 'ui-field' }, [textareaLabel, textarea, inputError, example]),
         el('div', { className: 'trk-bulk-actions' }, [checkButton, sampleButton]),
         reportNode,

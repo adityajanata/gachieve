@@ -394,7 +394,7 @@ Numbers in the sketches below are examples only.
 
 ### 4.2 Bulk Mark (drawer on desktop, full screen on mobile)
 
-1. Title "Bulk Mark" and a short hint for the active mode.
+1. Title "Bulk Mark" and a short hint for the active mode. The JSON tab shows a numbered guide "Cara penggunaan" instead: (1) record the achievement list, (2) send the recording to an AI (Claude or Gemini recommended) with the prompt, (3) paste the JSON below and press **Check**, (4) press **Apply** when it is valid. Step 2 holds a read-only textarea "Prompt untuk AI" (Poppins, not mono) with **Copy prompt** (secondary). The prompt is the Markdown file `assets/js/tracker/bulk-prompt.md`, one text for both languages, edited by the owner and loaded when the drawer opens.
 2. Segmented tabs: **By name** | **By name + stage (JSON)**. Each tab shows a small format example under the textarea.
 3. Textarea (JSON tab in JetBrains Mono).
 4. **Check** (secondary) runs Inquiry in the browser.

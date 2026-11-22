@@ -2,6 +2,8 @@ Options -Indexes
 DirectoryIndex index.php
 # Source maps of the self-hosted vendor files are JSON.
 AddType application/json .map
+# The Bulk Mark AI prompt (assets/js/tracker/bulk-prompt.md) is plain Markdown read by fetch.
+AddType "text/markdown; charset=utf-8" .md
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -20,7 +22,7 @@ AddType application/json .map
 
     # Revalidate through ETag. ES modules have no build hash, so a stale copy of one
     # file next to a fresh copy of another would break the page after every update.
-    <FilesMatch "\.(json|js|css)$">
+    <FilesMatch "\.(json|js|css|md)$">
         Header set Cache-Control "no-cache"
     </FilesMatch>
 
