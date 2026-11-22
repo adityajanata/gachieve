@@ -157,4 +157,4 @@
 /* Approvals */
 .adm-review-grid { display: grid; gap: 24px; }
 .adm-review-col { display: grid; gap: 12px; align-content: start; min-width: 0; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
-@media (min-width: 1024px) { .adm-review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .adm-review-grid-compare { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

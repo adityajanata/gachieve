@@ -16,6 +16,9 @@ final class AchievementCatalog
     /** @var array<int, array{id: string, en: string}>|null */
     private static ?array $names = null;
 
+    /** @var array<int, string>|null */
+    private static ?array $versions = null;
+
     /** @return list<array<string, mixed>> */
     public static function items(string $lang): array
     {
@@ -59,6 +62,23 @@ final class AchievementCatalog
             }
         }
         return self::$names;
+    }
+
+    /**
+     * Every achievement's key (first stage id) and the game version that added it, such as "2.3".
+     * Both language files carry the same version, so one is enough.
+     *
+     * @return array<int, string>
+     */
+    public static function versions(): array
+    {
+        if (self::$versions === null) {
+            self::$versions = [];
+            foreach (self::items('en') as $item) {
+                self::$versions[$item['id'][0]] = (string) $item['version'];
+            }
+        }
+        return self::$versions;
     }
 
     public static function hasAchievement(int $achievementId): bool

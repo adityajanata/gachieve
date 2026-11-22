@@ -46,6 +46,7 @@ final class ReviewService
         $statement->execute();
 
         $names = AchievementCatalog::names();
+        $versions = AchievementCatalog::versions();
         $items = [];
         foreach ($statement->fetchAll() as $row) {
             $achievementId = (int) $row['achievement_id'];
@@ -54,6 +55,7 @@ final class ReviewService
                 'achievement_id' => $achievementId,
                 'name_id' => $names[$achievementId]['id'] ?? '',
                 'name_en' => $names[$achievementId]['en'] ?? '',
+                'game_version' => $versions[$achievementId] ?? '',
                 'version_no' => (int) $row['version_no'],
                 'created_by_name' => $row['display_name'] ?? 'Deleted Account',
                 'created_by_is_agent' => Policy::isAgentId($row['created_by'] === null ? null : (int) $row['created_by']),

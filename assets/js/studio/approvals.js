@@ -72,7 +72,7 @@ function backToQueue() {
 function contentColumn(heading, content, lang) {
     return el('section', { className: 'adm-review-col' }, [
         el('h2', { className: 'adm-section-title', text: heading }),
-        content ? renderTutorial(content, lang) : emptyState('ph-book-open', t('reviewNoLive')),
+        renderTutorial(content, lang),
     ]);
 }
 
@@ -89,7 +89,8 @@ function historyList(history) {
 
 function reviewPage(row, data) {
     let lang = getLang();
-    const columns = el('div', { className: 'adm-review-grid' });
+    // A first version has nothing live to compare with, so the proposed column takes the full width.
+    const columns = el('div', { className: data.live ? 'adm-review-grid adm-review-grid-compare' : 'adm-review-grid' });
     const tabs = el('div', { className: 'ui-segmented', attrs: { role: 'group', 'aria-label': t('editorLanguage') } });
 
     function paint() {
@@ -105,7 +106,7 @@ function reviewPage(row, data) {
         })));
         columns.replaceChildren(
             contentColumn(t('reviewProposed'), data.proposed, lang),
-            contentColumn(t('reviewLive'), data.live, lang),
+            ...(data.live ? [contentColumn(t('reviewLive'), data.live, lang)] : []),
         );
     }
     paint();
@@ -264,6 +265,7 @@ function queuePage({ items, meta }) {
                     el('span', { className: 'adm-muted', text: row.name_en }),
                 ]),
             },
+            { label: t('colGameVersion'), render: (row) => (row.game_version ? `v${row.game_version}` : '') },
             {
                 label: t('colAuthor'),
                 render: (row) => (row.created_by_is_agent

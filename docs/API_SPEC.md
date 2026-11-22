@@ -143,7 +143,7 @@ A **translation** object is `{ body_html, video: { provider: "youtube", video_id
 
 | Action | Method | Who | Request | Response `data` |
 | --- | --- | --- | --- | --- |
-| `queue` | GET | A | `?page=&per_page=` | `[{ version_id, achievement_id, name_id, name_en, version_no, created_by_name, created_by_is_agent, submitted_at, is_update, langs }]` + `meta` |
+| `queue` | GET | A | `?page=&per_page=` | `[{ version_id, achievement_id, name_id, name_en, game_version, version_no, created_by_name, created_by_is_agent, submitted_at, is_update, langs }]` + `meta` |
 | `get` | GET | A | `?version_id=` | `{ proposed: content, live: content \| null, history: [review] }` |
 | `approve` | POST | A | `{ version_id }` | `{ status: "published", points: [{ event_key, points }], badges: [badge_key] }` |
 | `reject` | POST | A | `{ version_id, reason }` | `{ status: "rejected" }` |
