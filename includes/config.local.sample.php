@@ -6,6 +6,10 @@ declare(strict_types=1);
 return [
     'app.base_path' => '/genshinachievements/',
 
+    // Ubuntu PHP reports 8.3.6 even with the php2shell patch. Set true only after
+    // `apt changelog php8.3-cli | grep CVE-2026-109618` shows the patch.
+    'php.vendor_patched' => false,
+
     'db.name' => 'genshinachievements_db',
     'db.user' => 'root',
     'db.pass' => '',

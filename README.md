@@ -26,6 +26,7 @@ Defaults are in `includes/config.php`. `includes/config.local.php` overrides the
 | Key | Meaning |
 | --- | --- |
 | `app.base_path` | URL path of the project root, with a trailing slash |
+| `php.vendor_patched` | `true` lets PHP older than 8.3.36 run when the distribution backported the php2shell patch (CVE-2026-109618, CVE-2026-109619). Check the changelog first |
 | `lock.timeout_seconds`, `lock.warn_before_seconds`, `lock.heartbeat_seconds` | Editor lock timing |
 | `editor.autosave_seconds` | Background autosave interval |
 | `bulk.max_items` | Stage ids per bulk Apply or import |

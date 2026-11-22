@@ -7,6 +7,9 @@ return [
     'app.name' => 'Genshin Achievements',
     'app.base_path' => '/',
 
+    // true only after checking the distribution changelog lists CVE-2026-109618 and CVE-2026-109619.
+    'php.vendor_patched' => false,
+
     'db.host' => '127.0.0.1',
     'db.port' => 3306,
     'db.name' => '',

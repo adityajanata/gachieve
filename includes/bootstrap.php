@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-// 8.3.36 patches php2shell (PRD Decisions Log 36). Refuse to run on anything older.
-if (version_compare(PHP_VERSION, '8.3.36', '<')) {
-    http_response_code(500);
-    exit('PHP 8.3.36 or newer is required.');
-}
-
 spl_autoload_register(static function (string $class): void {
     foreach (['core', 'auth', 'services', 'content'] as $folder) {
         $file = __DIR__ . "/{$folder}/{$class}.php";
@@ -40,3 +34,10 @@ set_exception_handler(static function (Throwable $e): void {
 });
 
 Config::load(__DIR__ . '/config.php', __DIR__ . '/config.local.php');
+
+// 8.3.36 patches php2shell (PRD Decisions Log 36). Refuse to run on anything older, unless
+// config.local.php confirms the distribution backported the patch: Ubuntu still reports 8.3.6.
+if (version_compare(PHP_VERSION, '8.3.36', '<') && Config::get('php.vendor_patched') !== true) {
+    http_response_code(500);
+    exit('PHP 8.3.36 or newer is required.');
+}

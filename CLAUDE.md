@@ -43,7 +43,7 @@ If a conflict is not covered below, stop and ask. Never resolve it silently.
 
 **Stack**
 
-- PHP **8.3, minimum 8.3.36** (php2shell patch). `declare(strict_types=1);` in every PHP file. No framework, no Composer, no Node on the server.
+- PHP **8.3, minimum 8.3.36** (php2shell patch), or a distribution build with the patch backported and `php.vendor_patched` set to `true` in `config.local.php` (Decisions Log 63). `declare(strict_types=1);` in every PHP file. No framework, no Composer, no Node on the server.
 - MySQL through PDO only: prepared statements with bound parameters, emulated prepares off, `utf8mb4`, connection `time_zone = '+00:00'`. All DATETIME values are UTC.
 - Frontend libraries from CDN with **pinned exact versions** and SRI hashes, each allowed by its exact path in the CSP: GSAP, SweetAlert2, Phosphor Icons (web), svg-clouds (day sky clouds, Decisions Log 53), Google Fonts (Poppins, JetBrains Mono). No CSS framework (Decisions Log 52). TinyMCE is self-hosted in `assets/js/vendor/tinymce/`, and tippy.js 6.3.7 with Popper 2.11.8 (Studio tooltips) in `assets/js/vendor/tippy-6.3.7/` and `popper-2.11.8/` with their source maps and licenses (Decisions Log 59). Vendor files are never edited; a versioned vendor folder caches for a year, so a new version goes in a new folder. The one exception is Google's `gsi/client` script, which Google publishes with no version to pin.
 
