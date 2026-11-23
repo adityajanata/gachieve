@@ -2,16 +2,41 @@
 
 declare(strict_types=1);
 
-/** @var string $pageTitle */
+/**
+ * @var string $pageTitle
+ * @var string|null $pageDescription Meta and Open Graph description; pages without one are not meant for search
+ * @var bool|null $pageNoindex Keeps the page out of search results (Studio)
+ */
+$pageDescription ??= null;
+$pageNoindex ??= false;
+$appUrl = (string) Config::get('app.url');
+$escape = static fn (string $value): string => htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 ?>
 <!doctype html>
 <html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
-    <base href="<?= htmlspecialchars((string) Config::get('app.base_path'), ENT_QUOTES, 'UTF-8') ?>">
-    <link rel="icon" href="data:,">
+    <title><?= $escape($pageTitle) ?></title>
+    <base href="<?= $escape((string) Config::get('app.base_path')) ?>">
+    <?php if ($pageNoindex): ?>
+    <meta name="robots" content="noindex, nofollow">
+    <?php endif; ?>
+    <?php if ($pageDescription !== null): ?>
+    <meta name="description" content="<?= $escape($pageDescription) ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<?= $escape((string) Config::get('app.name')) ?>">
+    <meta property="og:title" content="<?= $escape($pageTitle) ?>">
+    <meta property="og:description" content="<?= $escape($pageDescription) ?>">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <?php if ($appUrl !== ''): ?>
+    <link rel="canonical" href="<?= $escape($appUrl) ?>">
+    <meta property="og:url" content="<?= $escape($appUrl) ?>">
+    <?php endif; ?>
+    <?php endif; ?>
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
     <script src="assets/js/core/theme-init.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Poppins:wght@400;500;600;700&display=swap">

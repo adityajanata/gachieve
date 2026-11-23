@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/includes/bootstrap.php';
 
-$pageTitle = (string) Config::get('app.name');
+$pageTitle = Config::get('app.name') . ' | Tracker Achievement Genshin Impact';
+$pageDescription = 'Lacak semua achievement Genshin Impact, tandai banyak sekaligus, dan baca tutorial cara mendapatkannya. Gratis, bisa dipakai tanpa akun.';
 
 require __DIR__ . '/includes/views/head.php';
 ?>
@@ -14,7 +15,7 @@ require __DIR__ . '/includes/views/head.php';
     <?php require __DIR__ . '/includes/views/header.php'; ?>
 
     <main class="ui-content">
-        <h1 class="ui-sr-only"><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></h1>
+        <h1 class="ui-sr-only"><?= htmlspecialchars((string) Config::get('app.name'), ENT_QUOTES, 'UTF-8') ?></h1>
         <noscript>
             <div class="ui-banner"><p>JavaScript is required to use this tracker.</p></div>
         </noscript>

@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 $pageTitle = 'Studio - ' . Config::get('app.name');
 $adminStyles = true;
+$pageNoindex = true;
 $trackerTools = false;
 $adminTitleKey ??= null;
 

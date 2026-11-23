@@ -311,7 +311,9 @@ The project root is the web root (InfinityFree only gives `htdocs/`, so there is
 ```
 genshin-achievements/
 ├── index.php                  Tracker page (Guest and signed-in)
-├── .htaccess                  Security headers, deny dotfiles, deny private folders
+├── robots.php                 Served as /robots.txt (rewrite), built from config (Decisions Log 64)
+├── sitemap.php                Served as /sitemap.xml (rewrite), built from config (Decisions Log 64)
+├── .htaccess                  Security headers, deny dotfiles, deny private folders, robots and sitemap rewrites
 ├── .gitignore
 ├── README.md                  Local setup, import order, config keys
 │
@@ -373,7 +375,7 @@ genshin-achievements/
 │   │   │                      points.js, my-points.js, audit.js, maintenance.js
 │   │   └── vendor/            Self-hosted, never edited: tinymce/, tippy-6.3.7/,
 │   │                          popper-2.11.8/ (with source maps and licenses)
-│   └── img/                   Logo, icons, badge art, placeholders
+│   └── img/                   Logo, icons, badge art, placeholders, favicon.svg
 │
 ├── data/                      achievements.id.json, achievements.en.json (SSoT, read-only, public)
 ├── uploads/                   YYYY/MM/DD/ tutorial images; .htaccess blocks script execution
@@ -475,6 +477,7 @@ No open questions remain. Decisions taken:
 61. Approvals has bulk approve: a checkbox per queue row, "Select all on this page", and **Approve selected** in a sticky bar with one confirmation. The client calls the existing `reviews.approve` once per version, in order, so each version keeps its own checks; there is no bulk endpoint. A selection holds at most 30 versions (the `review` rate limit, API 6.1), kept across pages; the 31st tick is refused with a notice that names the limit. A rate limit stops the run, and versions that were not approved stay selected. Reject stays one at a time because each needs its own reason (DESIGN 4.5).
 62. The writer agent is an account named Charlotte: role Contributor, email `charlotte@steambird.invalid`, picture `assets/img/charlotte.webp`, and `google_sub` `agent:charlotte`, which no Google id can match (they are digits only), so it has no sign-in path; `Auth::login` refuses it as well. The server knows it by the config key `agent.user_id` (set per server from `includes/cli/create-agent.php`), not by a schema change. It earns no points or badges; its title is always `agent.badge_title` ("Journalist"). Administrators cannot change its role or delete it (`FORBIDDEN`); Disable is its off switch. It submits through `includes/cli/agent-submit.php` (stdin JSON `{ achievement_id, content_input }`, the editor save shape), which runs open, save and submit as Charlotte through `TutorialService`, never takes over, and releases its lock on failure. On a VPS the script is the forced command of an SSH key (`command=...`, `no-pty`, `no-port-forwarding`), so the key cannot open a shell; there is no web endpoint or token. An Administrator still reviews every submission; the queue marks it with a robot chip. This replaces the earlier rule that the agent only writes draft files and a human presses Submit.
 63. Distribution PHP builds keep their base version number while security patches are backported: Ubuntu 24.04 reports `8.3.6` (empty `PHP_EXTRA_VERSION`) although `8.3.6-0ubuntu0.24.04.13` and later carry `CVE-2026-109618_109619.patch`. The app cannot tell such a build from an unpatched one, so the bootstrap guard also accepts PHP older than 8.3.36 when the per-server config key `php.vendor_patched` is exactly `true` (default `false`). Set it in `config.local.php` only after `apt changelog php8.3-cli` lists both CVEs, and check again after any move to a new server or distribution release.
+64. Search basics for the tracker page (M5). The per-server config key `app.url` holds the absolute public URL ending in `app.base_path` (for example `https://example.com/`); empty leaves out the canonical link, `og:url` and the sitemap. `includes/views/head.php` prints a meta description and Open Graph tags (`og:type`, `og:site_name`, `og:title`, `og:description`, `og:locale` `id_ID` with alternate `en_US`, `twitter:card` `summary`) only for pages that set `$pageDescription`, which is the tracker alone; its title is "Genshin Achievements | Tracker Achievement Genshin Impact" and its description is Indonesian, the default language. There is no `og:image` until an image that is not game art exists. Studio pages send `noindex, nofollow`. `robots.php` and `sitemap.php` in the root are served as `/robots.txt` and `/sitemap.xml` through `.htaccess`, so no domain is written into a file: robots disallows `studio/` and names the sitemap, and the sitemap lists the tracker with `lastmod` taken from the newer data file. `api/` and `data/` stay crawlable because the tracker renders from them, but send `X-Robots-Tag: noindex`. `mod_deflate` also compresses HTML, plain text, XML and SVG. The favicon is `assets/img/favicon.svg`, the Phosphor `wind` icon (bold, MIT) of the wordmark; a favicon cannot read `app.css`, so it repeats the two `--accent` values (DESIGN 2.1, 2.2), the one place a color sits outside the tokens. Public tutorial pages with their own URLs are not part of this decision.
 
 ## 12. Milestones
 

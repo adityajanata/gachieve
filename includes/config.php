@@ -6,6 +6,9 @@ declare(strict_types=1);
 return [
     'app.name' => 'Genshin Achievements',
     'app.base_path' => '/',
+    // Absolute public URL ending in base_path, e.g. https://example.com/. Set per server.
+    // Empty leaves out canonical, og:url and the sitemap (robots.txt then has no Sitemap line).
+    'app.url' => '',
 
     // true only after checking the distribution changelog lists CVE-2026-109618 and CVE-2026-109619.
     'php.vendor_patched' => false,

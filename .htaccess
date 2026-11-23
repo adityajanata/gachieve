@@ -11,6 +11,9 @@ AddType "text/markdown; charset=utf-8" .md
     RewriteRule (^|/)\. - [F,L]
     RewriteRule ^(includes|database|storage|docs)(/|$) - [F,L]
     RewriteRule ^(CLAUDE|README)\.md$ - [F,L]
+    # Built from config (app.base_path, app.url), so the domain is never written into a file.
+    RewriteRule ^robots\.txt$ robots.php [L]
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
 </IfModule>
 
 <IfModule mod_headers.c>
@@ -31,8 +34,13 @@ AddType "text/markdown; charset=utf-8" .md
     <If "%{REQUEST_URI} =~ m#/assets/js/vendor/[a-z]+(-[a-z]+)*-[0-9]+\.[0-9]+\.[0-9]+/#">
         Header set Cache-Control "public, max-age=31536000, immutable"
     </If>
+
+    # The tracker loads these to render, so crawlers may fetch them, but they never show in search results.
+    <If "%{REQUEST_URI} =~ m#/(api|data)/#">
+        Header set X-Robots-Tag "noindex"
+    </If>
 </IfModule>
 
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE application/json text/css text/javascript application/javascript
+    AddOutputFilterByType DEFLATE text/html text/plain application/xml image/svg+xml application/json text/css text/javascript application/javascript
 </IfModule>
