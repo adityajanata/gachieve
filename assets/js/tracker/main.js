@@ -161,6 +161,9 @@ function handleSignedOut() {
 
 function syncBanners() {
     byId('trk-guest-banner').hidden = signedIn || readStored('guestBannerDismissed') === true;
+    // From here the hidden attribute decides; banner-init.js reads lastSignedIn on the next visit.
+    document.documentElement.classList.add('trk-guest-banner-on');
+    writeStored('lastSignedIn', signedIn);
     byId('trk-offline-banner').hidden = !signedIn || navigator.onLine;
 }
 
@@ -283,7 +286,7 @@ async function loadData() {
         filters.setVersions(catalog.versions);
         nav.build(catalog);
         refreshCounts();
-        filterBar.hidden = false;
+        filterBar.inert = false;
         bulkOpenButton.disabled = false;
         renderList();
     } catch (error) {
@@ -291,6 +294,7 @@ async function loadData() {
         console.error(error);
         // With nothing loaded, the summary skeleton and the filters have nothing to show.
         summaryNode.hidden = catalog === null;
+        filterBar.hidden = catalog === null;
         list.showMessage('ph ph-warning-circle', t('dataFailed'), 'Retry', loadData);
     }
 }

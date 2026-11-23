@@ -19,7 +19,8 @@ require __DIR__ . '/includes/views/head.php';
         <noscript>
             <div class="ui-banner"><p>JavaScript is required to use this tracker.</p></div>
         </noscript>
-        <div id="trk-guest-banner" class="ui-banner" hidden>
+        <?php // Shown before first paint by banner-init.js, then kept in sync by main.js (no layout shift). ?>
+        <div id="trk-guest-banner" class="ui-banner">
             <i class="ph ph-info" aria-hidden="true"></i>
             <p data-i18n="guestBanner"></p>
             <button id="trk-guest-banner-close" type="button" class="ui-icon-btn" aria-label="Dismiss">
@@ -51,7 +52,7 @@ require __DIR__ . '/includes/views/head.php';
             <nav id="trk-sidebar" class="trk-sidebar" data-i18n-aria="categories"></nav>
 
             <div class="trk-main">
-                <div id="trk-filter-bar" class="trk-filter-bar" hidden>
+                <div id="trk-filter-bar" class="trk-filter-bar" inert>
                     <button id="trk-filter-open" type="button" class="ui-btn ui-btn-secondary trk-filter-open">
                         <i class="ph ph-sliders-horizontal" aria-hidden="true"></i>
                         <span id="trk-filter-open-label">Filter</span>

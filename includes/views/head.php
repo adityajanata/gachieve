@@ -38,6 +38,9 @@ $escape = static fn (string $value): string => htmlspecialchars($value, ENT_QUOT
     <?php endif; ?>
     <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
     <script src="assets/js/core/theme-init.js"></script>
+    <?php if ($trackerTools ?? true): ?>
+    <script src="assets/js/tracker/banner-init.js"></script>
+    <?php endif; ?>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Poppins:wght@400;500;600;700&display=swap">
     <?php // SRI pins each CDN file to the exact bytes of its pinned version. ?>

@@ -209,6 +209,9 @@ export function createFilters({ tutorialKeys, onChange }) {
         });
     });
 
+    // Built now, before the data, so the bar already has its height (main.js keeps it inert until then).
+    render();
+
     return {
         setVersions(next) {
             versions = next;

@@ -275,7 +275,8 @@ body.ui-scroll-lock { overflow: hidden; }
 }
 
 /* Category chips: mobile and tablet */
-.trk-chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 16px 8px; scroll-snap-type: x proximity; scroll-padding-inline: 16px; scrollbar-width: none; }
+/* min-height holds one 36 px chip row plus padding before the chips load, so the header does not grow later. */
+.trk-chips { display: flex; gap: 8px; min-height: 48px; overflow-x: auto; padding: 4px 16px 8px; scroll-snap-type: x proximity; scroll-padding-inline: 16px; scrollbar-width: none; }
 .trk-chips::-webkit-scrollbar { display: none; }
 .ui-chip {
     flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 4px 12px;
@@ -364,6 +365,12 @@ body.ui-scroll-lock { overflow: hidden; }
 }
 
 /* Tracker layout */
+/* Space is settled before first paint so nothing pushes the list down later (layout shift):
+   banner-init.js decides on the guest banner, and the filter bar holds its place, unseen, while inert. */
+#trk-guest-banner { display: none; }
+.trk-guest-banner-on #trk-guest-banner { display: flex; }
+.trk-filter-bar[inert] { visibility: hidden; }
+
 .trk-layout { display: grid; gap: 16px; align-items: start; }
 .trk-main { min-width: 0; display: grid; gap: 16px; }
 .trk-sidebar { display: none; }

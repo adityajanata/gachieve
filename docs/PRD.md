@@ -369,6 +369,8 @@ genshin-achievements/
 │   │   │                      bulk-mark.js, bulk-inquiry.js, backup.js, account.js,
 │   │   │                      filters.js, category-nav.js, summary.js,
 │   │   │                      tutorial-modal.js, main.js,
+│   │   │                      banner-init.js (classic script in head, before first paint:
+│   │   │                      guest banner guess from localStorage, so it causes no layout shift),
 │   │   │                      bulk-prompt.md (Bulk Mark AI prompt, owner-edited)
 │   │   ├── studio/            shell.js, ui.js, dashboard.js, tutorials.js, editor.js,
 │   │   │                      tinymce-config.js, lock.js, approvals.js, users.js,
