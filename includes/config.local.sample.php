@@ -7,6 +7,8 @@ return [
     'app.base_path' => '/genshinachievements/',
     // Public URL for canonical, Open Graph and the sitemap. Production: https://yourdomain/
     'app.url' => 'http://localhost/genshinachievements/',
+    // Production only: the token from Cloudflare dashboard > Web Analytics > Manage site.
+    'analytics.cf_beacon_token' => '',
 
     // Ubuntu PHP reports 8.3.6 even with the php2shell patch. Set true only after
     // `apt changelog php8.3-cli | grep CVE-2026-109618` shows the patch.

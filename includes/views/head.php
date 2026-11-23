@@ -66,4 +66,10 @@ $escape = static fn (string $value): string => htmlspecialchars($value, ENT_QUOT
     <?php if ($trackerTools ?? true): ?>
     <script id="ui-gsi-script" src="https://accounts.google.com/gsi/client" async></script>
     <?php endif; ?>
+    <?php // Visitor statistics on public pages only. Cloudflare publishes the beacon with no version to pin. ?>
+    <?php $beaconToken = (string) Config::get('analytics.cf_beacon_token'); ?>
+    <?php if ($beaconToken !== '' && !$pageNoindex): ?>
+    <script src="https://static.cloudflareinsights.com/beacon.min.js" defer
+            data-cf-beacon="<?= $escape(json_encode(['token' => $beaconToken], JSON_THROW_ON_ERROR)) ?>"></script>
+    <?php endif; ?>
 </head>

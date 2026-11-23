@@ -27,6 +27,7 @@ Defaults are in `includes/config.php`. `includes/config.local.php` overrides the
 | --- | --- |
 | `app.base_path` | URL path of the project root, with a trailing slash |
 | `app.url` | Absolute public URL ending in `app.base_path`, for example `https://example.com/`. Used for the canonical link, `og:url`, `robots.txt` and `sitemap.xml`; empty leaves them out. Set it per server, then submit `/sitemap.xml` in Google Search Console |
+| `analytics.cf_beacon_token` | Cloudflare Web Analytics site token. Empty loads no beacon; set it on production only |
 | `php.vendor_patched` | `true` lets PHP older than 8.3.36 run when the distribution backported the php2shell patch (CVE-2026-109618, CVE-2026-109619). Check the changelog first |
 | `lock.timeout_seconds`, `lock.warn_before_seconds`, `lock.heartbeat_seconds` | Editor lock timing |
 | `editor.autosave_seconds` | Background autosave interval |
