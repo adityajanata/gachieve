@@ -28,7 +28,7 @@ const SAMPLE_JSON = `[
 const OPEN_FOUND_LIMIT = 20;
 
 // The draft survives closing the drawer, so a stray backdrop click loses nothing.
-const draft = { mode: MODE_NAME, text: '' };
+const draft = { mode: MODE_JSON, text: '' };
 
 function resultLine(primary, secondary) {
     return el('li', { className: 'trk-bulk-item' }, [
@@ -285,8 +285,8 @@ export function openBulkMark({ catalog, loadOther, progress, maxItems, onApply, 
     });
 
     const modeButtons = [
-        [MODE_NAME, 'By name'],
         [MODE_JSON, 'By name + stage (JSON)'],
+        [MODE_NAME, 'By name'],
     ].map(([mode, label]) => el('button', {
         text: label,
         attrs: { type: 'button', 'data-mode': mode },
