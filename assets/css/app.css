@@ -148,7 +148,16 @@ body.ui-scroll-lock { overflow: hidden; }
 .ui-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .ui-primogem { flex: none; width: 16px; height: 16px; object-fit: contain; }
 .trk-summary-primo .ui-primogem { width: 20px; height: 20px; }
-.ui-footer { padding: 24px 16px; text-align: center; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-subtle); }
+.ui-footer { display: grid; justify-items: center; padding: 24px 16px 12px; text-align: center; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-subtle); }
+.ui-footer a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; color: var(--text-muted); text-decoration: underline; }
+.ui-footer a:hover { color: var(--accent); }
+
+/* Long text pages that hold both languages (privacy): only the block matching <html lang> shows. */
+html:not([lang="en"]) .ui-lang-block[lang="en"], html[lang="en"] .ui-lang-block[lang="id"] { display: none; }
+.ui-doc { width: 100%; max-width: 800px; margin: 0 auto; padding: 24px 16px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
+@media (min-width: 768px) { .ui-doc { padding: 32px 40px; } }
+.ui-doc h1 { margin: 0 0 4px; font-size: 24px; line-height: 32px; font-weight: 600; }
+.ui-doc .ui-doc-meta { margin-bottom: 24px; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-subtle); }
 
 /* Buttons */
 .ui-btn {
@@ -568,7 +577,7 @@ mark.trk-hit { background: var(--accent-soft); color: inherit; border-radius: va
 .ui-video-play img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .ui-video-icon { position: absolute; top: 50%; left: 50%; display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: var(--radius-pill); background: var(--accent); color: var(--on-accent); font-size: 24px; transform: translate(-50%, -50%); transition: background-color 120ms ease-out; }
 .ui-video-play:hover .ui-video-icon { background: var(--accent-strong); }
-.ui-prose { max-width: 65ch; overflow-wrap: anywhere; }
+.ui-prose { max-width: 100ch; overflow-wrap: anywhere; }
 .ui-prose > :first-child { margin-top: 0; }
 .ui-prose > :last-child { margin-bottom: 0; }
 .ui-prose p, .ui-prose ul, .ui-prose ol, .ui-prose pre { margin: 0 0 16px; }

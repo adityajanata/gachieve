@@ -1,8 +1,8 @@
-# DESIGN.md: Genshin Achievements
+# DESIGN.md: Gachieve
 
 Version 0.1 · 2026-11-05 · Companion to the PRD, schema v1 and API Spec v0.1
 
-This document fixes how Genshin Achievements looks, moves and behaves. It holds rules and values, not code. When code and this document disagree, this document wins until it is updated.
+This document fixes how Gachieve looks, moves and behaves. It holds rules and values, not code. When code and this document disagree, this document wins until it is updated.
 
 ---
 
@@ -26,7 +26,7 @@ This document fixes how Genshin Achievements looks, moves and behaves. It holds 
 
 **Fan-site rules**
 
-- Footer always shows: "Fan-made project. Not affiliated with HoYoverse."
+- Footer always shows: "Fan-made project. Not affiliated with HoYoverse.", and under it a link to the privacy policy (4.6).
 - No official game logos, character art, achievement icons or HoYoverse fonts. Visual flavor comes from color, shape and Phosphor icons only.
 - **One owner-approved exception:** the Primogem currency image (`assets/img/primogem.png`) marks rewards next to their numbers. It is never used as decoration, a logo or a background (see 2.3).
 
@@ -341,7 +341,7 @@ Numbers in the sketches below are examples only.
 
 ```
 ┌ Header 64 px (sticky) ─────────────────────────────────────────────────────────────┐
-│ Genshin Achievements      [ Search ............................. ]  Bulk Mark  ID|EN ◐ (avatar) │
+│ Gachieve                  [ Search ............................. ]  Bulk Mark  ID|EN ◐ (avatar) │
 ├────────────────────────────────────────────────────────────────────────────────────┤
 │ [Guest banner, if Guest]                                                            │
 │ [ 77%  1.204 / 1.558 selesai   ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▭▭▭   ◆ 9.870 / 14.085 Primogem ]      │
@@ -372,7 +372,7 @@ Numbers in the sketches below are examples only.
 
 ```
 ┌ Header 56 px ───────────────────────────┐
-│ ≋ Genshin Achievements     ⇪  ID|EN  ◐  ●│   (⇪ = Bulk Mark icon button)
+│ ≋ Gachieve                 ⇪  ID|EN  ◐  ●│   (⇪ = Bulk Mark icon button)
 ├─────────────────────────────────────────┤
 │ [ Search ............................ ] │   sticky with the header
 │ ‹ chip  chip  chip  chip ›               │   scroll-snap categories
@@ -422,7 +422,7 @@ Numbers in the sketches below are examples only.
 
 Same tokens and components, denser and plainer. No hero, no decorative panels.
 
-- **Shell:** pages live at `/studio`, tab title "Studio - Genshin Achievements". Left sidebar nav 240 px: All Tutorials and My Points (Contributor) first, then an "Admin" group heading (`caption`, `--text-subtle`) over Dashboard, Approvals, Users, Points Settings, Audit Log and Maintenance, shown to Administrators only. Items are hidden when the role lacks access, and the active item is in `--accent-soft`. On mobile the sidebar becomes a top bar with a menu sheet titled "Studio".
+- **Shell:** pages live at `/studio`, tab title "Studio - Gachieve". Left sidebar nav 240 px: All Tutorials and My Points (Contributor) first, then an "Admin" group heading (`caption`, `--text-subtle`) over Dashboard, Approvals, Users, Points Settings, Audit Log and Maintenance, shown to Administrators only. Items are hidden when the role lacks access, and the active item is in `--accent-soft`. On mobile the sidebar becomes a top bar with a menu sheet titled "Studio".
 - **Tables:** `small` text, row height 48 px, header row sticky, bottom divider per row, actions at the row end as ghost buttons or a "more" menu, pagination at the bottom (Previous / page numbers / Next). On mobile each row becomes a stacked block with label and value pairs.
 - **Dashboard:** one panel with four numbers separated by vertical dividers (users by role, pending reviews, published tutorials, active locks), then the pending reviews list.
 - **All Tutorials:** search plus state filter chips (None, Live, Draft, Pending, Rejected, Locked); each row shows names ID and EN, live version, open version status chip, lock holder, **Edit**.
@@ -431,6 +431,13 @@ Same tokens and components, denser and plainer. No hero, no decorative panels.
 - **Users:** the user cell has a 32 px avatar (first letter when there is no picture), the name with the top badge chip, and the email below. For the writer agent Charlotte the role is plain text and there is no Delete button; Disable stays.
 - **Approvals author:** a tutorial from the writer agent shows a 24 px round robot chip (`ph-fill ph-robot`, `--accent-soft` with `--accent-strong`) after the name, with the tooltip "Ditulis oleh agen AI" (3.12).
 - **Points Settings, Audit Log, Maintenance:** standard tables and forms. Maintenance shows the dry-run list first, then **Delete Unused** behind a danger confirmation.
+
+### 4.6 Privacy policy (`privacy.php`)
+
+- **Header:** wordmark, language toggle and theme toggle only; no search, Bulk Mark or sign-in.
+- **Body:** one `.ui-doc` panel, centered, max width 800 px: `--surface`, 1 px `--border`, `--radius-card`, padding 24 / 16 on mobile and 32 / 40 from 768 px. Inside, the shared `.ui-prose` styles at 65 characters wide. Title in `h1`, "Terakhir diperbarui" / "Last updated" date under it in `caption` `--text-subtle`, sections in `h2`, links in `--accent`.
+- **Language:** both languages are in the page; only the block that matches `<html lang>` shows, and the tab title follows the toggle ("Kebijakan Privasi | Gachieve" / "Privacy Policy | Gachieve").
+- **Footer link** (every page): "Kebijakan Privasi" / "Privacy Policy" under the fan-made line, `caption`, `--text-muted`, underlined, `--accent` on hover, 44 px tall hit area.
 
 ---
 

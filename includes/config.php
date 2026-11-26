@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 // Defaults only. Secrets and machine-specific values go in config.local.php.
 return [
-    'app.name' => 'Genshin Achievements',
+    'app.name' => 'Gachieve',
     'app.base_path' => '/',
     // Absolute public URL ending in base_path, e.g. https://example.com/. Set per server.
     // Empty leaves out canonical, og:url and the sitemap (robots.txt then has no Sitemap line).

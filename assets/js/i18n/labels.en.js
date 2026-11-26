@@ -6,6 +6,7 @@ export const labels = {
     progressSummary: 'Progress summary',
     guestBanner: 'Your progress is saved in this browser. Sign in to save it to an account.',
     offlineBanner: 'You are offline. Changes are not saved yet.',
+    privacyLink: 'Privacy Policy',
     importMerged: '{count} stages from this browser were merged into your account',
     welcome: 'Welcome, {name}',
     profileTitle: 'Profile',

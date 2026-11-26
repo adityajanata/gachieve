@@ -1,4 +1,4 @@
-# Genshin Achievements
+# Gachieve
 
 Fan-made Genshin Impact achievement tracker. PHP 8.3 (minimum 8.3.36), MySQL, HTML + CSS + vanilla JS. Not affiliated with HoYoverse.
 

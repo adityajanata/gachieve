@@ -1,4 +1,4 @@
-# API Spec: Genshin Achievement Tracker
+# API Spec: Gachieve
 
 Draft v0.1 · Nov 5, 2026 · @Nata · Companion to the PRD and schema v1
 

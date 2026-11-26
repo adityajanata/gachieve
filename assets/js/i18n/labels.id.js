@@ -6,6 +6,7 @@ export const labels = {
     progressSummary: 'Ringkasan progres',
     guestBanner: 'Progres disimpan di browser ini. Masuk untuk menyimpannya ke akun.',
     offlineBanner: 'Anda sedang offline. Perubahan belum tersimpan.',
+    privacyLink: 'Kebijakan Privasi',
     importMerged: '{count} stage dari browser ini sudah digabung ke akun Anda',
     welcome: 'Selamat datang, {name}',
     profileTitle: 'Profil',

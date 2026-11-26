@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Genshin Achievements: a fan-made Genshin Impact achievement tracker. PHP 8.3 native backend, MySQL, HTML + CSS (tokens in `assets/css/app.css`, no framework) + vanilla JS (ES modules) frontend.
+Gachieve: a fan-made Genshin Impact achievement tracker. PHP 8.3 native backend, MySQL, HTML + CSS (tokens in `assets/css/app.css`, no framework) + vanilla JS (ES modules) frontend.
 
 ## Read before coding
 
